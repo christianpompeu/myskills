@@ -1,15 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { Fragment, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Platform, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Platform,
+  TouchableOpacity
+} from 'react-native';
 
 export function Home() {
-  const [newSkill, setNewSkill] = useState('Teste');
+  const [newSkill, setNewSkill] = useState('');
   const [skills, setSkills] = useState([]);
 
-  function handleNewSkills(){
+  function handleNewSkills() {
     const newSkills = [...skills, newSkill];
     setSkills(newSkills);
+    setNewSkill('');
   }
   return (
     <Fragment>
@@ -17,16 +25,24 @@ export function Home() {
         <Text style={styles.title}>
           Welcome, Christian
         </Text>
-        <TextInput 
-          style={styles.input} 
+        <TextInput
+          style={styles.input}
           placeholder="New Skill"
           onChangeText={setNewSkill}
-          placeholderTextColor="#555"
+          value={newSkill}
+          placeholderTextColor="#555555"
         />
-        <TouchableOpacity></TouchableOpacity>
-        <Text>
-          {newSkill}
-        </Text>
+        <TouchableOpacity style={styles.button} onPress={handleNewSkills}>
+          <Text style={styles.buttonText}>
+            Add
+          </Text>
+        </TouchableOpacity>
+        {skills.map(
+          (skill) => (
+            <Text style={styles.textList} key={skill}>
+              {skill}
+            </Text>)
+        )}
       </View>
 
     </Fragment>
@@ -51,6 +67,25 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     padding: Platform.OS === 'ios' ? 20 : 15,
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: '#A370F7',
+    marginVertical: 15,
+    padding: 20,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  textList: {
+    color: '#FFFFFF',
+    backgroundColor: '#1F1E25',
+    padding: 10,
+    marginVertical: 5,
     borderRadius: 5,
   }
 });
