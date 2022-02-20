@@ -7,16 +7,17 @@ import {
   StyleSheet,
   TextInput,
   Platform,
-  TouchableOpacity
+  FlatList,
 } from 'react-native';
+import { Button } from '../components/Button';
+import { SkillCard } from '../components/SkillCard';
 
 export function Home() {
   const [newSkill, setNewSkill] = useState('');
   const [skills, setSkills] = useState([]);
 
-  function handleNewSkills() {
-    const newSkills = [...skills, newSkill];
-    setSkills(newSkills);
+  function handleAddNewSkill() {
+    setSkills(oldState => ([...oldState, newSkill]));
     setNewSkill('');
   }
   return (
@@ -32,19 +33,18 @@ export function Home() {
           value={newSkill}
           placeholderTextColor="#555555"
         />
-        <TouchableOpacity style={styles.button} onPress={handleNewSkills}>
-          <Text style={styles.buttonText}>
-            Add
-          </Text>
-        </TouchableOpacity>
-        {skills.map(
-          (skill) => (
-            <Text style={styles.textList} key={skill}>
-              {skill}
-            </Text>)
-        )}
+        <Button onPress={handleAddNewSkill} text="Adicionar" />
+        <Text style={[styles.title, { marginTop: 50 }]}>
+          My Skills
+        </Text>
+        <FlatList
+          data={skills}
+          keyExtractor={item => item}
+          renderItem={({ item }) => (
+            <SkillCard skill={item} />
+          )}
+        />
       </View>
-
     </Fragment>
   );
 }
@@ -69,23 +69,4 @@ const styles = StyleSheet.create({
     padding: Platform.OS === 'ios' ? 20 : 15,
     borderRadius: 5,
   },
-  button: {
-    backgroundColor: '#A370F7',
-    marginVertical: 15,
-    padding: 20,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  textList: {
-    color: '#FFFFFF',
-    backgroundColor: '#1F1E25',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 5,
-  }
 });
