@@ -1,14 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { Fragment, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Platform, TouchableOpacity } from 'react-native';
 
 export function Home() {
   const [newSkill, setNewSkill] = useState('Teste');
   const [skills, setSkills] = useState([]);
 
   function handleNewSkills(){
-    
+    const newSkills = [...skills, newSkill];
+    setSkills(newSkills);
   }
   return (
     <Fragment>
@@ -16,7 +17,13 @@ export function Home() {
         <Text style={styles.title}>
           Welcome, Christian
         </Text>
-        <TextInput style={styles.input} placeholder="New Skill"onChangeText={setNewSkill} />
+        <TextInput 
+          style={styles.input} 
+          placeholder="New Skill"
+          onChangeText={setNewSkill}
+          placeholderTextColor="#555"
+        />
+        <TouchableOpacity></TouchableOpacity>
         <Text>
           {newSkill}
         </Text>
