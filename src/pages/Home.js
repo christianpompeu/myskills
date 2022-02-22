@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,16 +15,33 @@ import { SkillCard } from '../components/SkillCard';
 export function Home() {
   const [newSkill, setNewSkill] = useState('');
   const [skills, setSkills] = useState([]);
+  const [gretting, setGretting] = useState('');
 
   function handleAddNewSkill() {
     setSkills(oldState => ([...oldState, newSkill]));
     setNewSkill('');
   }
+
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+      setGretting('Good Morning!')
+    } else if (currentHour >= 12 && currentHour < 18) {
+      setGretting('Good Afternoon!!')
+    } else {
+      setGretting('Good Night!!!')
+    }
+  }, []);
+
   return (
     <Fragment>
       <View style={styles.container}>
         <Text style={styles.title}>
           Welcome, Christian
+        </Text>
+        <Text style={styles.gretting}>
+          {gretting}
         </Text>
         <TextInput
           style={styles.input}
@@ -69,5 +86,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: Platform.OS === 'ios' ? 20 : 15,
     borderRadius: 5,
+  },
+  gretting: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 10,
   },
 });
