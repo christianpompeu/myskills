@@ -4,17 +4,19 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import { ButtonProps } from "../types";
 
-export function Button(props) {
+export function Button({text,...rest}: ButtonProps) {
   return (
     <Fragment>
       <TouchableOpacity
         style={styles.button}
-        onPress={props.onPress}
-        activeOpacity={0.7}
+        onPress={rest.onPress}
+        activeOpacity={.7}
+        {...rest}
       >
         <Text style={styles.buttonText}>
-          {props.text}
+          {text}
         </Text>
       </TouchableOpacity>
     </Fragment>
